@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Messages{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-10 col-sm-10">
+            <div class="ui category search mb-4" style="text-align: center;">
+                <div class="ui icon input">
+                  <input class="prompt shadow" type="text" size="55" id="user_search" placeholder="Search users...">
+                  <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+              </div>
+            {% for msg in messages %}
+            <div class="row align-items-center text-center p-2 rounded shadow my-2" style="background-color: #1b1c1d;">
+                <div class="col-2">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalshow{{msg.tos.username}}">
+                    <img width="40" height="40" style="border-radius: 25px;" src="{{msg.tos.profile}}">
+                    </a>
+                </div>
+                <div id="modalshow{{msg.tos.username}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: black;">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: white;">{{msg.tos.name}}</h4>
+                            </div>
+                            <div class="row">
+                                <img src="{{msg.tos.profile}}" alt="" class="img-fluid">
+                            </div>
+                            <div class="modal-footer" >
+                                <button type="button" class="ui red button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5" style="color: white;">
+                    {{msg.tos.name}}
+                </div>
+                <div class="col-5">
+                    {% if msg.tos.is_authenticated %}
+                    <span class="ui green label">Online</span>
+                    {% else %}
+                    <span class="ui gray label">Offline</span>
+                    {% endif %}
+                </div>
+                <div style="text-align:left; color:grey; padding:5px 20px">
+                    {{msg.message}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

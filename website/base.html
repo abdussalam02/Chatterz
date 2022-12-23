@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo App - Fastapi</title>
+
+    </head>
+    <body>
+        <div style="margin-top: 50px;" class="ui container">
+            <h1 class="ui center aligned header">TODO's</h1>
+
+            <form class="ui form" action="/insert" method="post">
+                <div class="field">
+                    <label>Do something</label>
+                    <input type="text" name="work" placeholder="Add the thing you crave to do">
+                    <br>
+                </div>
+                <button class="ui blue button" type="submit">Add</button>
+            </form>
+
+            <hr>
+
+            {% for todo in todos %} 
+            <div class="ui segment" style="display:flex; align-items: center;">
+                <div style="margin-right: 10px; font-weight:600;">
+                    <p>{{ loop.index }}</p>
+                </div>
+                <div style="flex: 2; margin-right: 20px;">
+                    <form action="/update/{{todo.id}}" method="post">
+                        <div class="ui fluid action input">
+                            <input type="text" name="work" value="{{ todo.work }}">
+                            <button type="submit" class="ui blue vertical animated button" tabindex="0">
+                                <div class="hidden content">Update</div>
+                                <div class="visible content">
+                                <i class="pencil alternate icon"></i>
+                                </div>  
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    {% if todo.complete == False %}
+                    <span class="ui gray label">Pending</span>
+                    {% else %}
+                    <span class="ui green label">Completed</span>
+                    {% endif %}
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <p class="ui gray label">{{todo.time_created.strftime('%d/%m/%Y')}}</p>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                {% if todo.complete == False %}
+                <a class="ui blue" href="/complete/{{ todo.id }}">
+                    <div class="ui teal vertical animated button" tabindex="0">
+                        <div class="hidden content">Done</div>
+                        <div class="visible content">
+                        <i class="check circle outline icon"></i>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+                <a class="" href="/delete/{{ todo.id }}">
+                    <div class="ui red vertical animated button" tabindex="0">
+                        <div class="hidden content">Delete</div>
+                        <div class="visible content">
+                          <i class="trash icon"></i>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+    </body>
+
+</html>

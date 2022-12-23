@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block body %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="ui category search mb-5" style="text-align: center;">
+            <div class="ui icon input">
+              <input class="prompt shadow" type="text" size="55" id="user_search" placeholder="Search users...">
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
+          </div>
+        <div class="col-lg-5 col-sm-10 col-10">
+            {% for u in users %}
+            {% if u.username == user.username %}
+            {% else %}
+            <div class="row align-items-center text-center p-2 rounded shadow my-2" style="background-color: #1b1c1d;">
+                <div class="col-2">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalshow{{u.username}}">
+                    <img width="50" height="50" style="border-radius: 25px;" src="{{u.profile}}">
+                    </a>
+                </div>
+                <div id="modalshow{{u.username}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: black;">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: white;">{{u.name}}</h4>
+                            </div>
+                            <div class="row">
+                                <img src="{{u.profile}}" alt="" class="img-fluid">
+                            </div>
+                            <div class="modal-footer" >
+                                <button type="button" class="ui red button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 text-light">
+                    {{u.name}}
+                </div>
+                <div class="col-3">
+                    {% if u.logged %}
+                    <span class="ui green label">Online</span>
+                    {% else %}
+                    <span class="ui gray label">Offline</span>
+                    {% endif %}
+                </div>
+                <div class="col-4" style="text-align: center;">
+                    <a class="ui blue" href="/message/{{ u.username }}">
+                        <div class="ui fluid blue vertical animated button" tabindex="0">
+                            <div class="hidden content">Message</div>
+                            <div class="visible content">
+                            <i class="paper plane icon"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

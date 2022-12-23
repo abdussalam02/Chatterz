@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+{% block body %}
+
+<div class="container">    
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-sm-10 col-10">
+        <div class="ui middle aligned center aligned grid ">
+        <div class="column px-5">
+          <h2 class="ui black image header">
+            <div class="content middle">
+              Register Here
+            </div>
+          </h2>
+          <form action="{{url_for('auth.register')}}" method="POST" enctype="multipart/form-data" class="ui large form">
+            <div class="ui">
+            <div class="field">
+                <label for="embedpollfileinput" class="ui icon button">
+                    <i class="user circle icon"></i>
+                    Add Profile Picture
+                </label>
+                <input type="file" name="profile" (change)="fileEvent($event)" id="embedpollfileinput" style="display: none;" />
+            </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="user icon"></i>
+                  <input type="text" name="name" placeholder="Full name">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="at icon"></i>
+                  <input type="text" name="username" placeholder="Username">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="envelope icon"></i>
+                  <input type="email" name="email" placeholder="E-mail address">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="phone icon"></i>
+                  <input type="tel" name="phone" placeholder="Phone number">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input type="password" name="password" placeholder="Password">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input type="password" name="password2" placeholder="Confirm Password">
+                </div>
+              </div>
+              <button type="submit" class="ui fluid large black submit button">Register</button>
+            </div>
+    
+            <div class="ui error message"></div>
+              
+          </form>
+    
+          <div class="ui message">
+            Already an User? <a href="{{url_for('auth.login')}}">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
+<script>
+    $('.message .close').on('click', function() {
+        $(this).closest('.message').transition('slide');
+    });
+</script>

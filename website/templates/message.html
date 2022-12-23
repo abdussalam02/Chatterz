@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}Message{% endblock title %}
+{% block css %}    <link rel="stylesheet" href="{{url_for('static', filename='css/msg.css')}}">
+{% endblock css %}
+{% block body %}
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-sm-11 col-md-10 col-11 shadow" style="background-color:white; border-radius: 6px;">
+            <div class="row align-items-center mb-3 p-2 rounded" style="background-color:#1b1c1d;"> 
+                <div class="col-4 mx-auto d-block">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalshow{{to_user.username}}">
+                        <img width="45" height="45" style="border-radius: 25px;" src="{{to_user.profile}}">
+                    </a>
+                </div>
+                <div id="modalshow{{to_user.username}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: black;">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: white;">{{to_user.name}}</h4>
+                            </div>
+                            <div class="row">
+                                <img src="{{to_user.profile}}" alt="" class="img-fluid">
+                            </div>
+                            <div class="modal-footer" >
+                                <button type="button" class="ui red button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center" style="color:white;">
+                    {{to_user.name}}
+                </div>
+                <div class="col-4 text-center">
+                    {% if to_user.is_authenticated %}
+                    <p class="ui green label">Online</p>
+                    {% else %}
+                    <p class="ui gray label">Offline</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row" style="height: 70vh; overflow-y:auto; overflow-x:hidden;">
+                {% for msg in messages %}
+                    {% if msg.from_user == user.username %}
+                        {% if msg.photo %}
+                        <div style="display:flex; justify-content: end; align-items: center; margin-bottom:5px;">
+                            <div class="ui small rotate reveal image rounded">
+                                <img src="/static/img/logo.png" class="visible content">
+                                <img src="{{msg.photo}}" class="hidden content">
+                            </div>
+                            <img class="mx-2" width="40" height="40" style="border-radius: 25px;" src="{{user.profile}}">
+                        </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-end align-items-center">
+                            {% if msg.message %}
+                            <div class="from_msg">
+                                {{msg.message}}
+                            </div>
+                            <img class="mx-2" width="40" height="40" style="border-radius: 25px;" src="{{user.profile}}">
+                            {% endif %}
+                        </div>
+                        <div class="time_from">
+                            {% if msg.message %}
+                            {% if msg.seen %}
+                            <span style="color: blue;"> &#10004;</span>
+                            <span style="color: #1b1c1d; font-size: 12px;">Seen &nbsp; </span>
+                            {% else %}
+                            <span style="color: #1b1c1d;"> &nbsp; &#10004;</span>
+                            <span style="color: #1b1c1d; font-size: 12px;">Unseen &nbsp; </span>
+                            {% endif %}
+                            <span style="font-size: 12px;">{{msg.date.strftime('%a %I:%M')}}</span>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% if msg.photo %}
+                            <div style="display:flex; justify-content: start; align-items: center;">
+                                <img class="mx-2" width="40" height="40" style="border-radius: 25px;" src="{{to_user.profile}}">
+                                <div class="ui small rotate reveal image rounded">
+                                    <img src="/static/img/logo.png" class="visible content">
+                                    <img src="{{msg.photo}}" class="hidden content">
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-start align-items-center">
+                            {% if msg.message %}
+                            <img class="mx-2" width="40" height="40" style="border-radius: 25px;" src="{{to_user.profile}}">
+                            <div class="to_msg">
+                                {{msg.message}}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div style="margin-left: 4rem; margin-bottom: 10px;">
+                            {% if msg.message %}
+                                <span style="font-size: 12px;">{{msg.date.strftime('%a %I:%M')}} &nbsp;</span>
+                                {% if msg.seen %}
+                                <span style="color: blue;">&#10004;</span>
+                                <span style="color: #1b1c1d; font-size: 12px;">Seen</span>
+                                {% else %}
+                                <span style="color: #1b1c1d;"> &nbsp; &#10004;</span>
+                                <span style="color: #1b1c1d; font-size: 12px;">Unseen</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            <div class="row m-2">
+                <form action="{{url_for('views.send')}}" method="POST" enctype="multipart/form-data">
+                    <div class="ui fluid action input">
+                        <div class="field">
+                            <label for="embedpollfileinput" class="ui icon button">
+                                <i class="paperclip icon"></i>
+                            </label>
+                            <input type="file" name="photo" (change)="fileEvent($event)" id="embedpollfileinput" style="display: none;" />
+                        </div>
+                        <input type="hidden" name="from_user" value="{{ user.username }}">
+                        <input type="hidden" name="to_user" value="{{ to_user.username }}">
+                        <input type="text" name="message" placeholder="Send a message..">
+                        <button type="submit" class="ui black vertical animated button" tabindex="0">
+                            <div class="hidden content">Send</div>
+                            <div class="visible content">
+                            <i class="paper plane icon"></i>
+                            </div>  
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

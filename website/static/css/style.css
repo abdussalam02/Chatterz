@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,html{
+  height: 100%;
+  margin: 0;
+  background: #7F7FD5;
+ background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+  background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+:root {
+  --main-color: #1b4053;
+  --white: #fdfff5;
+  --shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+/*Back to Top*/
+#btn-back-to-top {
+  position: fixed;
+  background-color: aliceblue;
+  color: var(--main-color);
+  border-radius: 10px;
+  padding: 8px;
+  border: none;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}
+
+/* Scroll Bar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset var(--shadow); 
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #5959c7;
+}
+
+/*Navbar*/
+#navbarNavAltMarkup a{
+  color: darkblue;
+}
+
+
+/* Home */
+
+.ind-container {
+  margin-top: 4rem; margin-bottom: 12rem;
+}
+
+.newText {
+  font-size: 52px;
+  margin-left: 20px;
+}
+
+.wellText {
+  font-size: 82px;
+  margin-left: 20px;
+}
+
+.deepText {
+  font-size: 96px;
+  border-width: 6px;
+  padding: 5px;
+  border-style: solid;
+  border-image: linear-gradient(to left, #91EAE4, #86A8E7, #7F7FD5) 1;
+}
+
+.webText {
+  text-align: right;
+}
+
+
+/* Message */
+.from_msg{
+  background: linear-gradient(to left, #91EAE4, #a2b7df, #d2d2ff);
+  padding: 8px 12px 8px 12px; 
+  border-radius:25px 25px 2px 25px; 
+  margin-left: 13rem;
+}
+
+.to_msg {
+  background: linear-gradient(to right, #91EAE4, #a2b7df, #d2d2ff);
+  padding: 8px 12px 8px 12px;
+  border-radius:25px 25px 25px 2px;
+  margin-right: 13rem;
+}
+
+/* Contact */
+
+.cnt-box {
+  background-color: white;
+  border-color: 3px solid black;
+  box-shadow: var(--shadow);
+}
+  
+input {
+  width: 100%;
+  border: none;
+  border-bottom:1px solid #ccc;
+  outline: none;
+  padding-bottom: 5px;
+}
+  
+textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+  
+label {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  display: block;
+  color: var(--black);
+}
+  
+.cnt-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(320deg, rgba(2,0,36,1) 0%, rgba(0,0,139,1) 35%, rgba(0,212,255,1) 100%);
+  border:none;
+  outline:none;
+  color:white;
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .cnt-box button {
+    margin-left: 50px;
+  }
+  .to_msg {
+    margin-right: 4rem;
+  }
+  .from_msg {
+    margin-left: 4rem;
+  }
+  .ind-container {
+    margin-top: 2rem;
+    margin-bottom: 7rem;
+  }
+
+  .newText {
+    font-size: 35px;
+  }
+
+  .wellText {
+    font-size: 45px;
+  }
+
+  .deepText {
+    font-size: 55px;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .cnt-box button {
+    margin-right: 180px;
+  }
+  .map-con {
+    width: max-content;
+  }
+  .boxers {
+    margin: 10px 10px;
+    padding: 20px 15px 10px 15px;
+  }
+}
+
+/* Footer */
+a {
+  text-decoration: none;
+  color: darkslategray;
+}
+a:hover {
+  color: black;
+}
+
+.somer {
+  color: grey;
+}
+
+.somer:hover{
+  color: darkblue;
+}
+
+.designs {
+  margin: auto;
+  margin-bottom: 10px;
+  width: 50%;
+  color: darkblue;
+  font-weight: bolder;
+}
+
+.time_from {
+  margin-left: 11rem;
+   margin-bottom: 10px;
+}
+
+@media screen and (min-width: 480px) and (max-width:1366px){
+  .time_from {
+    margin-left: 35rem;
+     margin-bottom: 10px;
+  }
+}

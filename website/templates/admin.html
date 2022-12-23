@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock title %}
+{% block body %}
+
+    <div class="col-lg-12 col-sm-12 col-12 col-md-12">
+        <div class="jumbotron p-3">
+            <h1 class="mb-5">Manage <b>Chairs</b> 
+                <button type="button" class="btn btn-success float-right m-2"
+                 data-bs-toggle="modal" data-bs-target="#mymodal">Add New Chairs</button>
+                 <div class="dropdown float-end">
+                    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mr. {{user.name}}
+                    </a>
+                  
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <li><a class="dropdown-item" href="{{url_for('views.msgview')}}">Messages</a></li>
+                      <li><a class="dropdown-item" href="{{url_for('static', filename='prisma.db')}}">Download DB</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Logout</a></li>
+                    </ul>
+                  </div>
+                </h1>
+                 {% with messages = get_flashed_messages(with_categories=true) %}
+                 {% if messages %}
+                 {% for category, message in messages %}
+                 
+                 {% if category == 'error' %}
+                 <div class="alert alert-dismissable alert-danger fade show" role="alert">
+                   {{ message }}
+                   <button type="button" class="close" data-bs-dismiss="alert">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+                 {% else %}
+                 <div class="alert alert-dismissable alert-success fade show text-center" role="alert">
+                   {{ message }}
+                   <button type="button" class="close" data-bs-dismiss="alert">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+                 {% endif %}
+             
+                 {% endfor %}
+                 {% endif %}
+                 {% endwith %}
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Cover</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for chair in chairs %}
+                <tr class="table-light">
+                    <td>{{chair.sno}}</td>
+                    <td>{{chair.title}}</td>
+                    <td class="col-lg-3 col-sm-3 col-3">{{chair.description|truncate}}</td>
+                    <td>{{chair.cover}}</td>
+                    <td>
+                        <a href="/update/{{chair.sno}}" class="btn btn-warning px-4 m-1" data-bs-toggle="modal" data-bs-target="#modaledit{{chair.sno}}">Edit</a>
+                        <a href="/delete/{{chair.sno}}" class="btn btn-danger px-3 m-1" onclick="return confirm('Are you sure to delete..?')">Delete</a>
+                    </td>
+                </tr>
+                <div id="modaledit{{chair.sno}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Chair</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('views.update')}}" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="">Title:</label>
+                                        <input type="hidden" name="sno" value="{{chair.sno}}">
+                                        <input type="text" class="form-control" name="title" value="{{chair.title}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="formFile" class="form-label">Chair Image</label>
+                                        <input class="form-control" type="file" id="formFile" name="cover">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3">{{chair.description}}</textarea>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary" >Update Chair</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Chairs</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url_for('views.insert')}}" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="">Title:</label>
+                                <input type="text" class="form-control" name="title" required="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="formFile" class="form-label">Chair Image</label>
+                                <input class="form-control" type="file" id="formFile" name="cover">
+                              </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Description</label>
+                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Add Chair</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

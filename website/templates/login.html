@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-sm-10 col-10">
+      <div class="ui middle aligned center aligned grid ">
+        <div class="column p-5">
+          <h2 class="ui black image header">
+            <div class="content middle mb-3">
+              Login Here
+            </div>
+          </h2>
+          <form action="{{url_for('auth.login')}}" method="POST" class="ui large form">
+            <div class="ui">
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="at icon"></i>
+                  <input type="text" name="username" placeholder="Username">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input type="password" name="password" placeholder="Password">
+                </div>
+              </div>
+              <button type="submit" class="ui fluid large black submit button">Login</button>
+            </div>
+    
+            <div class="ui error message">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    {% if category == 'error' %}
+                      <div class="ui negative message">
+                        <i class="close icon"></i>
+                        <div class="header">
+                          {{message}}
+                        </div>
+                        <p>Please try again!</p>
+                      </div>
+                    {% else %}
+                    <div class="ui success message">
+                      <i class="close icon"></i>
+                      <div class="header">
+                        {{message}}
+                      </div>
+                      <p>You may now log-in with the username you have chosen</p>
+                    </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+            </div>
+    
+          </form>
+
+          <div class="ui message">
+            New to Chatterz? <a href="{{url_for('auth.register')}}">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
